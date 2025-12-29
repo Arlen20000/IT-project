@@ -1,4 +1,4 @@
- component
+// Header component
 window.headerHTML = `
 <header class="header">
   <nav class="nav container">

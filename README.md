@@ -42,7 +42,11 @@ A modern, interactive SaaS website for IT outsourcing services featuring advance
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
+<<<<<<< HEAD
    cd arslan
+=======
+   cd arrlen
+>>>>>>> origin/main
    ```
 
 2. **Install backend dependencies**
@@ -279,4 +283,8 @@ For support, email hello@techflow.com or join our [Discord community](https://di
 **Built with ❤️ by TechFlow Solutions Team**
 
 *Transforming businesses through innovative IT outsourcing since 2018*</content>
+<<<<<<< HEAD
 <parameter name="filePath">c:\Users\User\Desktop\arslan\README.md
+=======
+<parameter name="filePath">c:\Users\User\Desktop\arslan\README.md
+>>>>>>> origin/main
