@@ -489,9 +489,8 @@
       const container = document.getElementById('services-container');
       utils.showLoading(container);
 
-      const origin = (window.location && window.location.origin && window.location.origin !== 'null') ? window.location.origin : 'http://localhost:3000';
-      const apiUrl = `${origin}/api/services`;
-      console.log('[services] fetch URL:', apiUrl, 'location:', window.location.href);
+      // Try relative API path first, then local JSON fallbacks
+      const candidates = ['api/services', 'backend/data/services.json', 'data/services.json'];
 
       const render = (services) => {
         container.innerHTML = services.map(service => `
@@ -510,33 +509,23 @@
         `).join('');
       };
 
-      try {
-        console.log('[services] attempting fetch...');
-        const response = await fetch(apiUrl, { cache: 'no-store' });
-        console.log('[services] fetch completed, status:', response.status, 'ok:', response.ok);
-        if (!response.ok) throw new Error('Non-OK response: ' + response.status);
-        const services = await response.json();
-        console.log('[services] received items:', Array.isArray(services) ? services.length : typeof services);
-        render(services);
-        return;
-      } catch (error) {
-        console.error('[services] primary fetch failed:', error);
-      }
-
-      // Try a fallback JSON served by the backend (if frontend is served by the same server)
-      try {
-        const fallbackUrl = `${origin}/backend/data/services.json`;
-        console.log('[services] trying fallback JSON at', fallbackUrl);
-        const res = await fetch(fallbackUrl);
-        if (res.ok) {
-          const services = await res.json();
-          console.log('[services] fallback JSON loaded, items:', services.length);
-          render(services);
-          return;
+      // Try candidates sequentially
+      for (const candidate of candidates) {
+        try {
+          const url = candidate;
+          const resp = await fetch(url, { cache: 'no-store' });
+          if (!resp.ok) {
+            console.warn('[services] candidate not ok:', url, resp.status);
+            continue;
+          }
+          const services = await resp.json();
+          if (services && services.length) {
+            render(services);
+            return;
+          }
+        } catch (err) {
+          console.warn('[services] candidate fetch failed:', candidate, err);
         }
-        console.warn('[services] fallback JSON not available, status:', res.status);
-      } catch (e) {
-        console.warn('[services] fallback fetch failed:', e);
       }
 
       // Final fallback: inline mock data to avoid broken UI
@@ -565,10 +554,7 @@
     // Initialize page-specific functionality
     document.addEventListener('DOMContentLoaded', () => {
 
-      // Add footer styles
-      const footerStyle = document.createElement('style');
-      footerStyle.textContent = window.footerStyles;
-      document.head.appendChild(footerStyle);
+      // footer styles already appended above; avoid appending twice
 
       // Load services
       loadServices();
