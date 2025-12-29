@@ -398,14 +398,33 @@
 
       try {
         const response = await fetch('/api/portfolio');
+        if (!response.ok) throw new Error('API response not ok');
         allProjects = await response.json();
-
         renderProjects(allProjects);
-        renderFeaturedProject(allProjects[0]); // Show first project as featured
-
+        if (allProjects && allProjects.length) renderFeaturedProject(allProjects[0]); // Show first project as featured
       } catch (error) {
-        console.error('Error loading portfolio:', error);
-        container.innerHTML = '<p class="error">Failed to load portfolio. Please try again later.</p>';
+        console.warn('API portfolio fetch failed, attempting local fallbacks', error);
+        // Try local fallbacks: backend/data/portfolio.json then data/portfolio.json
+        try {
+          const localResp = await fetch('backend/data/portfolio.json');
+          if (!localResp.ok) throw new Error('backend/data/portfolio.json not available');
+          allProjects = await localResp.json();
+          renderProjects(allProjects);
+          if (allProjects && allProjects.length) renderFeaturedProject(allProjects[0]);
+          return;
+        } catch (e1) {
+          try {
+            const localResp2 = await fetch('data/portfolio.json');
+            if (!localResp2.ok) throw new Error('data/portfolio.json not available');
+            allProjects = await localResp2.json();
+            renderProjects(allProjects);
+            if (allProjects && allProjects.length) renderFeaturedProject(allProjects[0]);
+            return;
+          } catch (e2) {
+            console.error('Error loading portfolio from API and local fallbacks', e1, e2);
+            container.innerHTML = '<p class="error">Failed to load portfolio. Please try again later.</p>';
+          }
+        }
       }
     }
 
