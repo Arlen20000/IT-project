@@ -42,11 +42,7 @@ A modern, interactive SaaS website for IT outsourcing services featuring advance
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-<<<<<<< HEAD
-   cd arslan
-=======
    cd arrlen
->>>>>>> origin/main
    ```
 
 2. **Install backend dependencies**
@@ -72,7 +68,7 @@ The application will be available at `http://localhost:3000` with hot reload ena
 ## 📁 Project Structure
 
 ```
-arslan/
+arrlen/
 ├── backend/                 # Node.js Express server
 │   ├── controllers/         # Route controllers
 │   ├── data/               # Mock data files
