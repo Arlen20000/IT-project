@@ -42,7 +42,7 @@ A modern, interactive SaaS website for IT outsourcing services featuring advance
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd arslan
+   cd arrlen
    ```
 
 2. **Install backend dependencies**
