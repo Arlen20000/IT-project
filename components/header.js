@@ -3,10 +3,10 @@ window.headerHTML = `
 <header class="header">
   <nav class="nav container">
     <div class="nav-brand">
-      <a href="home.html" class="logo">TechFlow Solutions</a>
+      <a href="index.html" class="logo">TechFlow Solutions</a>
     </div>
     <div class="nav-links">
-      <a href="home.html" class="nav-link" data-page="home">Home</a>
+      <a href="index.html" class="nav-link" data-page="home">Home</a>
       <a href="services.html" class="nav-link" data-page="services">Services</a>
       <a href="about.html" class="nav-link" data-page="about">About</a>
       <a href="portfolio.html" class="nav-link" data-page="portfolio">Portfolio</a>

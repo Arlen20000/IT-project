@@ -1,15 +1,18 @@
 const CACHE_NAME = 'techflow-v1.0.0';
 const STATIC_CACHE = 'techflow-static-v1.0.0';
 const DYNAMIC_CACHE = 'techflow-dynamic-v1.0.0';
+const CACHE_NAME = 'techflow-v1.0.0';
+const STATIC_CACHE = 'techflow-static-v1.0.0';
+const DYNAMIC_CACHE = 'techflow-dynamic-v1.0.0';
 
 // Files to cache immediately
 const STATIC_ASSETS = [
   '/',
-  '/styles/global.css',
-  '/components/header.js',
-  '/components/footer.js',
-  '/scripts/common.js',
-  '/manifest.json'
+  'styles/global.css',
+  'components/header.js',
+  'components/footer.js',
+  'scripts/common.js',
+  'manifest.json'
 ];
 
 // Install event - cache static assets
@@ -151,8 +154,8 @@ self.addEventListener('push', event => {
     const data = event.data.json();
     const options = {
       body: data.body,
-      icon: '/icon-192x192.png',
-      badge: '/icon-192x192.png',
+      icon: 'icon-192x192.png',
+      badge: 'icon-192x192.png',
       vibrate: [100, 50, 100],
       data: {
         dateOfArrival: Date.now(),
@@ -168,7 +171,7 @@ self.addEventListener('push', event => {
 // Notification click handler
 self.addEventListener('notificationclick', event => {
   event.notification.close();
-  event.waitUntil(
-    clients.openWindow('/')
-  );
+    event.waitUntil(
+      clients.openWindow('./')
+    );
 });

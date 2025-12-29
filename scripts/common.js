@@ -73,8 +73,11 @@ class NavigationManager {
   }
 
   init() {
-    this.setActiveLink();
-    this.bindMobileMenu();
+    // Delay activation until DOM is ready so header/footer inserted by pages are present
+    document.addEventListener('DOMContentLoaded', () => {
+      this.setActiveLink();
+      this.bindMobileMenu();
+    });
   }
 
   setActiveLink() {
@@ -92,7 +95,10 @@ class NavigationManager {
 
   getCurrentPage() {
     const path = window.location.pathname;
-    const page = path.split('/').pop().replace('.html', '') || 'home';
+    let page = path.split('/').pop().replace('.html', '');
+    if (!page) page = 'home';
+    // Treat index page as home for navigation highlighting
+    if (page === 'index') page = 'home';
     return page;
   }
 
@@ -190,7 +196,7 @@ class PWAManager {
   async registerServiceWorker() {
     if ('serviceWorker' in navigator) {
       try {
-        const registration = await navigator.serviceWorker.register('/sw.js');
+        const registration = await navigator.serviceWorker.register('sw.js');
         console.log('Service Worker registered:', registration);
 
         // Handle updates
@@ -295,7 +301,7 @@ class PWAManager {
     if (!document.querySelector('link[rel="manifest"]')) {
       const manifestLink = document.createElement('link');
       manifestLink.rel = 'manifest';
-      manifestLink.href = '/manifest.json';
+      manifestLink.href = 'manifest.json';
       document.head.appendChild(manifestLink);
     }
   }
