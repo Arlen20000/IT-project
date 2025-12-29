@@ -434,13 +434,30 @@
 
       try {
         const response = await fetch('/api/pricing');
+        if (!response.ok) throw new Error('API response not ok');
         packages = await response.json();
-
         renderPricing();
-
       } catch (error) {
-        console.error('Error loading pricing:', error);
-        container.innerHTML = '<p class="error">Failed to load pricing. Please try again later.</p>';
+        console.warn('API pricing fetch failed, attempting local fallbacks', error);
+        // Fallbacks: try backend/data/pricing.json then data/pricing.json
+        try {
+          const localResp = await fetch('backend/data/pricing.json');
+          if (!localResp.ok) throw new Error('backend/data/pricing.json not available');
+          packages = await localResp.json();
+          renderPricing();
+          return;
+        } catch (e1) {
+          try {
+            const localResp2 = await fetch('data/pricing.json');
+            if (!localResp2.ok) throw new Error('data/pricing.json not available');
+            packages = await localResp2.json();
+            renderPricing();
+            return;
+          } catch (e2) {
+            console.error('Error loading pricing from API and local fallbacks', e1, e2);
+            container.innerHTML = '<p class="error">Failed to load pricing. Please try again later.</p>';
+          }
+        }
       }
     }
 
@@ -498,8 +515,7 @@
 
     // Initialize page-specific functionality
     document.addEventListener('DOMContentLoaded', () => {
-      footerStyle.textContent = window.footerStyles;
-      document.head.appendChild(footerStyle);
+      // footerStyle already appended above; avoid appending twice
 
       // Load pricing
       loadPricing();
@@ -538,13 +554,13 @@
         // Calculate savings
         const monthlySavings = currentCost - ourMonthlyCost;
         const totalInvestment = ourMonthlyCost * timeline;
-        const roiMonths = totalInvestment / monthlySavings;
+        const roiMonths = (monthlySavings > 0) ? (totalInvestment / monthlySavings) : null;
         const threeYearSavings = monthlySavings * 36 - totalInvestment;
 
         // Update results
         results['total-investment'] = totalInvestment;
         results['monthly-savings'] = monthlySavings;
-        results['roi-timeline'] = Math.ceil(roiMonths);
+        results['roi-timeline'] = roiMonths !== null ? Math.ceil(roiMonths) : null;
         results['three-year-savings'] = threeYearSavings;
         results['investment-period'] = timeline;
 
@@ -569,7 +585,11 @@
                 element.classList.add('positive');
               }
             } else if (key === 'roi-timeline') {
-              formattedValue = `${value} months`;
+              if (value === null || value === undefined || !isFinite(value)) {
+                formattedValue = 'N/A';
+              } else {
+                formattedValue = `${value} months`;
+              }
             } else if (key === 'investment-period') {
               formattedValue = value;
             } else {
