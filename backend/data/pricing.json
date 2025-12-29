@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Starter Package",
+    "description": "Perfect for small businesses and startups",
+    "monthlyPrice": 2500,
+    "yearlyPrice": 25000,
+    "features": [
+      "Up to 40 hours of development",
+      "Basic web application",
+      "1 month support",
+      "Source code delivery",
+      "Basic documentation"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Professional Package",
+    "description": "Ideal for growing companies with complex needs",
+    "monthlyPrice": 5000,
+    "yearlyPrice": 50000,
+    "features": [
+      "Up to 100 hours of development",
+      "Full-stack web application",
+      "Mobile app development",
+      "3 months support",
+      "Advanced documentation",
+      "API integration",
+      "Database design"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Enterprise Package",
+    "description": "Comprehensive solution for large organizations",
+    "monthlyPrice": 10000,
+    "yearlyPrice": 100000,
+    "features": [
+      "Unlimited development hours",
+      "Multi-platform applications",
+      "Cloud infrastructure setup",
+      "AI/ML integration",
+      "12 months support",
+      "Dedicated project manager",
+      "Security audit",
+      "Performance optimization",
+      "Scalability planning"
+    ]
+  }
+]

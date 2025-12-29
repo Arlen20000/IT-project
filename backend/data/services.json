@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Web Development",
+    "description": "Custom web applications, responsive websites, and e-commerce platforms built with modern technologies like React, Node.js, and cloud services.",
+    "startingPrice": 5000,
+    "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop&crop=center",
+    "features": ["Responsive Design", "SEO Optimization", "API Integration", "Performance Optimization"]
+  },
+  {
+    "id": 2,
+    "name": "Mobile App Development",
+    "description": "Native and cross-platform mobile applications for iOS and Android, with focus on user experience and scalability.",
+    "startingPrice": 8000,
+    "image": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=300&fit=crop&crop=center",
+    "features": ["iOS & Android", "Cross-Platform", "UI/UX Design", "App Store Deployment"]
+  },
+  {
+    "id": 3,
+    "name": "Cloud Solutions",
+    "description": "Scalable cloud infrastructure, migration services, and DevOps solutions using AWS, Azure, and Google Cloud.",
+    "startingPrice": 3000,
+    "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=300&fit=crop&crop=center",
+    "features": ["Infrastructure Setup", "Migration", "Monitoring", "Security"]
+  },
+  {
+    "id": 4,
+    "name": "AI & Machine Learning",
+    "description": "Intelligent solutions including chatbots, predictive analytics, and automation using cutting-edge AI technologies.",
+    "startingPrice": 10000,
+    "image": "https://images.unsplash.com/photo-1555255707-c07966088b7b?w=400&h=300&fit=crop&crop=center",
+    "features": ["Chatbots", "Data Analysis", "Automation", "Custom Models"]
+  },
+  {
+    "id": 5,
+    "name": "Cybersecurity",
+    "description": "Comprehensive security audits, penetration testing, and implementation of security best practices.",
+    "startingPrice": 4000,
+    "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=300&fit=crop&crop=center",
+    "features": ["Security Audits", "Pen Testing", "Compliance", "Training"]
+  },
+  {
+    "id": 6,
+    "name": "Consulting",
+    "description": "Technical consulting, architecture design, and strategic IT planning to optimize your business operations.",
+    "startingPrice": 2000,
+    "image": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop&crop=center",
+    "features": ["Architecture Design", "Strategy", "Process Optimization", "Team Training"]
+  }
+]
