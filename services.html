@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Services - TechFlow Solutions</title>
+  <meta name="description" content="Explore our comprehensive IT services including web development, mobile apps, cloud solutions, and AI integration.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <style>
+    /* Services specific styles */
+    .services-hero {
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .service-card {
+      background: var(--bg-primary);
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      border: 1px solid var(--border-color);
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .service-image {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--bg-tertiary);
+    }
+
+    .service-content {
+      padding: 1.5rem;
+    }
+
+    .service-price {
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .service-features {
+      list-style: none;
+      padding: 0;
+    }
+
+    .service-features li {
+      padding: 0.25rem 0;
+      font-size: var(--font-size-sm);
+      color: var(--text-secondary);
+    }
+
+    .service-features li:before {
+      content: "✓ ";
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+
+    .cta-banner {
+      background: var(--primary-color);
+      color: white;
+      padding: 3rem 0;
+      text-align: center;
+      margin: 4rem 0;
+    }
+
+    .process-section {
+      padding: 4rem 0;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .process-step {
+      text-align: center;
+      position: relative;
+    }
+
+    .step-number {
+      width: 60px;
+      height: 60px;
+      background: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-xl);
+      font-weight: bold;
+      margin: 0 auto 1rem;
+    }
+
+    .process-step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      top: 30px;
+      right: -20px;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+    }
+
+    @media (max-width: 768px) {
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .process-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .process-step:not(:last-child)::after {
+        content: "↓";
+        right: auto;
+        top: auto;
+        bottom: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    /* Calculator Section */
+    .calculator-section {
+      background-color: var(--bg-secondary);
+      padding: 4rem 0;
+    }
+
+    .calculator-container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+      background: var(--bg-primary);
+      border-radius: 1rem;
+      padding: 3rem;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+    }
+
+    .calculator-step {
+      margin-bottom: 3rem;
+    }
+
+    .calculator-step:last-child {
+      margin-bottom: 0;
+    }
+
+    .service-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .option-card {
+      display: block;
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-color);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .option-card:hover {
+      border-color: var(--primary-color);
+      background: var(--bg-primary);
+    }
+
+    .option-card input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .option-card input[type="checkbox"]:checked + .option-content {
+      background: rgba(37, 99, 235, 0.1);
+      border-color: var(--primary-color);
+    }
+
+    .option-card input[type="checkbox"]:checked + .option-content::before {
+      content: "✓";
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+      width: 1.5rem;
+      height: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+    }
+
+    .option-content {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .option-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+
+    .option-content h4 {
+      margin: 0 0 0.25rem 0;
+      font-size: var(--font-size-base);
+    }
+
+    .option-content p {
+      margin: 0;
+      font-size: var(--font-size-sm);
+      color: var(--text-secondary);
+    }
+
+    .option-price {
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-top: 0.25rem;
+      display: block;
+    }
+
+    .timeline-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .timeline-option {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-color);
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .timeline-option:hover {
+      border-color: var(--primary-color);
+    }
+
+    .timeline-option input[type="radio"] {
+      margin: 0;
+    }
+
+    .timeline-option input[type="radio"]:checked + .timeline-content {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .timeline-content {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+    }
+
+    .timeline-label {
+      font-weight: 500;
+    }
+
+    .timeline-price {
+      font-size: var(--font-size-sm);
+      color: var(--text-secondary);
+    }
+
+    .price-summary {
+      background: var(--bg-secondary);
+      border-radius: 1rem;
+      padding: 2rem;
+      position: sticky;
+      top: 2rem;
+    }
+
+    .price-summary h3 {
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .summary-breakdown {
+      margin-bottom: 2rem;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .summary-item.total {
+      border-bottom: none;
+      border-top: 2px solid var(--primary-color);
+      font-weight: 700;
+      font-size: var(--font-size-lg);
+      color: var(--primary-color);
+      margin-top: 1rem;
+      padding-top: 1rem;
+    }
+
+    .disclaimer {
+      font-size: var(--font-size-sm);
+      color: var(--text-secondary);
+      text-align: center;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header will be inserted here by JavaScript -->
+
+  <main>
+    <!-- Services Hero -->
+    <section class="services-hero">
+      <div class="container">
+        <h1 class="animate-on-scroll">Our Services</h1>
+        <p class="animate-on-scroll">Comprehensive IT solutions tailored to transform your business and drive innovation.</p>
+      </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="section">
+      <div class="container">
+        <div id="services-container" class="services-grid">
+          <!-- Services will be loaded here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="cta-banner">
+      <div class="container">
+        <h2>Ready to Get Started?</h2>
+        <p>Contact us today to discuss your project requirements and get a custom quote.</p>
+        <a href="contact.html" class="btn btn-primary">Contact Us</a>
+      </div>
+    </section>
+
+    <!-- Dynamic Pricing Calculator -->
+    <section class="calculator-section">
+      <div class="container">
+        <h2 class="animate-on-scroll">Build Your Perfect Package</h2>
+        <p class="animate-on-scroll">Customize your solution and get an instant quote</p>
+
+        <div class="calculator-container">
+          <div class="calculator-left">
+            <div class="calculator-step animate-on-scroll">
+              <h3>1. Choose Your Services</h3>
+              <div class="service-options">
+                <label class="option-card">
+                  <input type="checkbox" data-service="web" data-price="5000">
+                  <div class="option-content">
+                    <div class="option-icon">🌐</div>
+                    <div>
+                      <h4>Web Development</h4>
+                      <p>Custom websites & web apps</p>
+                      <span class="option-price">$5,000</span>
+                    </div>
+                  </div>
+                </label>
+                <label class="option-card">
+                  <input type="checkbox" data-service="mobile" data-price="8000">
+                  <div class="option-content">
+                    <div class="option-icon">📱</div>
+                    <div>
+                      <h4>Mobile Development</h4>
+                      <p>iOS & Android apps</p>
+                      <span class="option-price">$8,000</span>
+                    </div>
+                  </div>
+                </label>
+                <label class="option-card">
+                  <input type="checkbox" data-service="cloud" data-price="3000">
+                  <div class="option-content">
+                    <div class="option-icon">☁️</div>
+                    <div>
+                      <h4>Cloud Solutions</h4>
+                      <p>AWS, Azure, GCP setup</p>
+                      <span class="option-price">$3,000</span>
+                    </div>
+                  </div>
+                </label>
+                <label class="option-card">
+                  <input type="checkbox" data-service="ai" data-price="10000">
+                  <div class="option-content">
+                    <div class="option-icon">🤖</div>
+                    <div>
+                      <h4>AI Integration</h4>
+                      <p>ML & AI solutions</p>
+                      <span class="option-price">$10,000</span>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div class="calculator-step animate-on-scroll">
+              <h3>2. Project Timeline</h3>
+              <div class="timeline-options">
+                <label class="timeline-option">
+                  <input type="radio" name="timeline" value="1" data-multiplier="1.2">
+                  <div class="timeline-content">
+                    <span class="timeline-label">Rush (1 month)</span>
+                    <span class="timeline-price">+20%</span>
+                  </div>
+                </label>
+                <label class="timeline-option">
+                  <input type="radio" name="timeline" value="2" data-multiplier="1.0" checked>
+                  <div class="timeline-content">
+                    <span class="timeline-label">Standard (2-3 months)</span>
+                    <span class="timeline-price">Standard</span>
+                  </div>
+                </label>
+                <label class="timeline-option">
+                  <input type="radio" name="timeline" value="3" data-multiplier="0.8">
+                  <div class="timeline-content">
+                    <span class="timeline-label">Extended (6+ months)</span>
+                    <span class="timeline-price">-20%</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="calculator-right">
+            <div class="price-summary">
+              <h3>Your Estimate</h3>
+              <div class="summary-breakdown">
+                <div class="summary-item">
+                  <span>Base Services</span>
+                  <span id="base-price">$0</span>
+                </div>
+                <div class="summary-item">
+                  <span>Timeline Modifier</span>
+                  <span id="timeline-modifier">$0</span>
+                </div>
+                <div class="summary-item total">
+                  <span>Total Estimate</span>
+                  <span id="total-price">$0</span>
+                </div>
+              </div>
+              <button class="btn btn-primary" id="get-quote-btn">Get Detailed Quote</button>
+              <p class="disclaimer">* This is an estimate. Final pricing may vary based on specific requirements.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer will be inserted here by JavaScript -->
+
+  <script src="components/header.js"></script>
+  <script src="components/footer.js"></script>
+  <script src="scripts/common.js"></script>
+  <script>
+    // Load services from API with detailed logging and fallback
+    async function loadServices() {
+      const container = document.getElementById('services-container');
+      utils.showLoading(container);
+
+      const origin = (window.location && window.location.origin && window.location.origin !== 'null') ? window.location.origin : 'http://localhost:3000';
+      const apiUrl = `${origin}/api/services`;
+      console.log('[services] fetch URL:', apiUrl, 'location:', window.location.href);
+
+      const render = (services) => {
+        container.innerHTML = services.map(service => `
+          <div class="service-card animate-on-scroll">
+            <div class="service-image" style="background-image: url('${service.image || ''}')"></div>
+            <div class="service-content">
+              <h3>${service.name}</h3>
+              <div class="service-price">Starting at ${utils.formatCurrency(service.startingPrice)}</div>
+              <p>${service.description}</p>
+              <ul class="service-features">
+                ${service.features.map(feature => `<li>${feature}</li>`).join('')}
+              </ul>
+              <a href="contact.html?service=${service.id}" class="btn btn-primary">Get Quote</a>
+            </div>
+          </div>
+        `).join('');
+      };
+
+      try {
+        console.log('[services] attempting fetch...');
+        const response = await fetch(apiUrl, { cache: 'no-store' });
+        console.log('[services] fetch completed, status:', response.status, 'ok:', response.ok);
+        if (!response.ok) throw new Error('Non-OK response: ' + response.status);
+        const services = await response.json();
+        console.log('[services] received items:', Array.isArray(services) ? services.length : typeof services);
+        render(services);
+        return;
+      } catch (error) {
+        console.error('[services] primary fetch failed:', error);
+      }
+
+      // Try a fallback JSON served by the backend (if frontend is served by the same server)
+      try {
+        const fallbackUrl = `${origin}/backend/data/services.json`;
+        console.log('[services] trying fallback JSON at', fallbackUrl);
+        const res = await fetch(fallbackUrl);
+        if (res.ok) {
+          const services = await res.json();
+          console.log('[services] fallback JSON loaded, items:', services.length);
+          render(services);
+          return;
+        }
+        console.warn('[services] fallback JSON not available, status:', res.status);
+      } catch (e) {
+        console.warn('[services] fallback fetch failed:', e);
+      }
+
+      // Final fallback: inline mock data to avoid broken UI
+      const mock = [
+        { id: 1, name: 'Web Development', startingPrice: 5000, image: '', description: 'Custom web applications and e-commerce platforms.', features: ['Responsive Design', 'SEO Optimization'] },
+        { id: 2, name: 'Mobile App Development', startingPrice: 8000, image: '', description: 'Native and cross-platform mobile apps.', features: ['iOS & Android', 'UI/UX Design'] }
+      ];
+      console.warn('[services] using inline mock data (UI fallback)');
+      render(mock);
+    }
+
+    // Insert header and footer immediately
+    document.body.insertAdjacentHTML('afterbegin', window.headerHTML);
+    document.body.insertAdjacentHTML('beforeend', window.footerHTML);
+
+    // Add header styles
+    const headerStyle = document.createElement('style');
+    headerStyle.textContent = window.headerStyles;
+    document.head.appendChild(headerStyle);
+
+    // Add footer styles
+    const footerStyle = document.createElement('style');
+    footerStyle.textContent = window.footerStyles;
+    document.head.appendChild(footerStyle);
+
+    // Initialize page-specific functionality
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // Add footer styles
+      const footerStyle = document.createElement('style');
+      footerStyle.textContent = window.footerStyles;
+      document.head.appendChild(footerStyle);
+
+      // Load services
+      loadServices();
+
+      // Initialize calculator
+      initializeCalculator();
+    });
+  </script>
+  <script>
+    // Calculator functionality
+    function initializeCalculator() {
+      const serviceCheckboxes = document.querySelectorAll('input[data-service]');
+      const timelineRadios = document.querySelectorAll('input[name="timeline"]');
+      const basePriceElement = document.getElementById('base-price');
+      const timelineModifierElement = document.getElementById('timeline-modifier');
+      const totalPriceElement = document.getElementById('total-price');
+      const getQuoteBtn = document.getElementById('get-quote-btn');
+
+      let selectedServices = [];
+      let timelineMultiplier = 1.0;
+
+      function calculatePrice() {
+        // Calculate base price from selected services
+        const basePrice = selectedServices.reduce((sum, service) => sum + service.price, 0);
+
+        // Apply timeline modifier
+        const timelineModifier = basePrice * (timelineMultiplier - 1);
+        const totalPrice = basePrice * timelineMultiplier;
+
+        // Update display
+        basePriceElement.textContent = utils.formatCurrency(basePrice);
+        timelineModifierElement.textContent = (timelineModifier >= 0 ? '+' : '') + utils.formatCurrency(timelineModifier);
+        totalPriceElement.textContent = utils.formatCurrency(totalPrice);
+
+        // Update button state
+        getQuoteBtn.disabled = selectedServices.length === 0;
+        getQuoteBtn.textContent = selectedServices.length === 0 ? 'Select Services First' : 'Get Detailed Quote';
+      }
+
+      // Service selection handlers
+      serviceCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+          const service = e.target.dataset.service;
+          const price = parseInt(e.target.dataset.price);
+
+          if (e.target.checked) {
+            selectedServices.push({ service, price });
+          } else {
+            selectedServices = selectedServices.filter(s => s.service !== service);
+          }
+
+          calculatePrice();
+        });
+      });
+
+      // Timeline selection handlers
+      timelineRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          timelineMultiplier = parseFloat(e.target.dataset.multiplier);
+          calculatePrice();
+        });
+      });
+
+      // Get quote button handler
+      getQuoteBtn.addEventListener('click', () => {
+        if (selectedServices.length === 0) return;
+
+        const services = selectedServices.map(s => s.service).join(', ');
+        const total = totalPriceElement.textContent;
+
+        // Redirect to contact page with pre-filled information
+        const contactUrl = `contact.html?services=${encodeURIComponent(services)}&estimate=${encodeURIComponent(total)}`;
+        window.location.href = contactUrl;
+      });
+
+      // Initialize with default values
+      calculatePrice();
+    }
+  </script>
+</body>
+</html>

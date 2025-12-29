@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - TechFlow Solutions</title>
+  <meta name="description" content="Get in touch with TechFlow Solutions. Contact us for IT outsourcing services, project inquiries, or general questions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <style>
+    /* Contact specific styles */
+    .contact-hero {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .contact-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 3rem;
+    }
+
+    .calendar-section {
+      background: var(--bg-primary);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    .calendar-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .calendar-day-header {
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-secondary);
+      padding: 0.5rem;
+      font-size: var(--font-size-sm);
+    }
+
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: var(--font-size-sm);
+      position: relative;
+    }
+
+    .calendar-day:hover {
+      background: var(--bg-tertiary);
+    }
+
+    .calendar-day.available {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .calendar-day.selected {
+      background: var(--primary-hover);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .calendar-day.disabled {
+      color: var(--text-tertiary);
+      cursor: not-allowed;
+    }
+
+    .time-slots {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .time-slot {
+      padding: 0.5rem;
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: var(--font-size-sm);
+    }
+
+    .time-slot:hover {
+      background: var(--bg-tertiary);
+    }
+
+    .time-slot.selected {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    .time-slot.booked {
+      background: var(--bg-tertiary);
+      color: var(--text-tertiary);
+      cursor: not-allowed;
+    }
+
+    .calendar-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .calendar-nav button {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .calendar-nav button:hover {
+      background: var(--bg-tertiary);
+    }
+
+    .calendar-month-year {
+      font-weight: 600;
+      font-size: var(--font-size-lg);
+    }
+
+    .contact-form {
+      background: var(--bg-primary);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      font-family: inherit;
+      font-size: var(--font-size-base);
+      transition: var(--transition);
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-error {
+      color: #ef4444;
+      font-size: var(--font-size-sm);
+      margin-top: 0.25rem;
+      display: none;
+    }
+
+    .form-input.error,
+    .form-textarea.error {
+      border-color: #ef4444;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .info-icon {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      flex-shrink: 0;
+    }
+
+    .info-content h3 {
+      margin-bottom: 0.25rem;
+    }
+
+    .info-content p {
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .success-message {
+      display: none;
+      background: #d1fae5;
+      color: #065f46;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #a7f3d0;
+      margin-bottom: 1rem;
+    }
+
+    .error-message {
+      display: none;
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #fecaca;
+      margin-bottom: 1rem;
+    }
+
+    .map-section {
+      background-color: var(--bg-secondary);
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .map-container {
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .map-placeholder {
+      height: 300px;
+      background: var(--bg-tertiary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+    }
+
+    @media (max-width: 768px) {
+      .contact-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .contact-form {
+        padding: 1.5rem;
+      }
+
+      .calendar-section {
+        padding: 1.5rem;
+      }
+
+      .calendar-grid {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.25rem;
+      }
+
+      .calendar-day {
+        font-size: 0.75rem;
+        padding: 0.25rem;
+      }
+
+      .time-slots {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.25rem;
+      }
+
+      .time-slot {
+        padding: 0.25rem;
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header will be inserted here by JavaScript -->
+
+  <main>
+    <!-- Contact Hero -->
+    <section class="contact-hero">
+      <div class="container">
+        <h1 class="animate-on-scroll">Contact Us</h1>
+        <p class="animate-on-scroll">Ready to start your next project? Get in touch and let's discuss how we can help.</p>
+      </div>
+    </section>
+
+    <!-- Contact Form & Info -->
+    <section class="section">
+      <div class="container">
+        <div class="contact-content">
+          <!-- Contact Form -->
+          <div class="contact-form animate-on-scroll">
+            <div id="success-message" class="success-message">
+              Thank you for your message! We'll get back to you within 24 hours.
+            </div>
+            <div id="error-message" class="error-message">
+              There was an error sending your message. Please try again.
+            </div>
+
+            <form id="contact-form">
+              <div class="form-group">
+                <label for="name" class="form-label">Full Name *</label>
+                <input type="text" id="name" name="name" class="form-input" required>
+                <div class="form-error">Please enter your full name</div>
+              </div>
+
+              <div class="form-group">
+                <label for="email" class="form-label">Email Address *</label>
+                <input type="email" id="email" name="email" class="form-input" required>
+                <div class="form-error">Please enter a valid email address</div>
+              </div>
+
+              <div class="form-group">
+                <label for="service" class="form-label">Service of Interest</label>
+                <select id="service" name="service" class="form-select">
+                  <option value="">Select a service</option>
+                  <option value="web-development">Web Development</option>
+                  <option value="mobile-app">Mobile App Development</option>
+                  <option value="cloud-solutions">Cloud Solutions</option>
+                  <option value="ai-ml">AI & Machine Learning</option>
+                  <option value="cybersecurity">Cybersecurity</option>
+                  <option value="consulting">Consulting</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message" class="form-label">Message *</label>
+                <textarea id="message" name="message" class="form-textarea" required placeholder="Tell us about your project..."></textarea>
+                <div class="form-error">Please enter your message</div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+            </form>
+          </div>
+
+          <!-- Contact Info -->
+          <div class="contact-info animate-on-scroll">
+            <div class="info-item">
+              <div class="info-icon">📧</div>
+              <div class="info-content">
+                <h3>Email Us</h3>
+                <p>hello@techflow.com</p>
+                <p>sales@techflow.com</p>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon">📞</div>
+              <div class="info-content">
+                <h3>Call Us</h3>
+                <p>+1 (555) 123-4567</p>
+                <p>Mon-Fri 9AM-6PM EST</p>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon">📍</div>
+              <div class="info-content">
+                <h3>Visit Us</h3>
+                <p>123 Tech Street<br>San Francisco, CA 94105<br>United States</p>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon">💬</div>
+              <div class="info-content">
+                <h3>Live Chat</h3>
+                <p>Available 24/7 on our website</p>
+                <a href="ai-assistant.html" class="btn btn-secondary" style="margin-top: 0.5rem;">Start Chat</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Calendar -->
+          <div class="calendar-section animate-on-scroll">
+            <div class="calendar-header">
+              <h3>Schedule a Meeting</h3>
+              <p>Book a free consultation with our experts</p>
+            </div>
+
+            <div class="calendar-nav">
+              <button id="prev-month">←</button>
+              <div class="calendar-month-year" id="calendar-month-year">December 2024</div>
+              <button id="next-month">→</button>
+            </div>
+
+            <div class="calendar-grid" id="calendar-grid">
+              <!-- Calendar days will be populated by JavaScript -->
+            </div>
+
+            <div class="time-slots" id="time-slots">
+              <!-- Time slots will be populated by JavaScript -->
+            </div>
+
+            <button id="book-meeting" class="btn btn-primary" style="width: 100%; margin-top: 1rem; display: none;">
+              Book Meeting
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+      <div class="container">
+        <h2 class="animate-on-scroll">Find Us</h2>
+        <div class="map-container animate-on-scroll">
+          <div class="map-placeholder">
+            <div>
+              <div style="font-size: 3rem; margin-bottom: 1rem;">📍</div>
+              <p>Interactive map would be embedded here</p>
+              <p style="font-size: var(--font-size-sm);">123 Tech Street, San Francisco, CA 94105</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer will be inserted here by JavaScript -->
+
+  <script src="components/header.js"></script>
+  <script src="components/footer.js"></script>
+  <script src="scripts/common.js"></script>
+  <script>
+    // Form validation and submission
+    const contactForm = document.getElementById('contact-form');
+    const successMessage = document.getElementById('success-message');
+    const errorMessage = document.getElementById('error-message');
+
+    // Validate email
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    // Show error
+    function showError(input, message) {
+      const errorDiv = input.nextElementSibling;
+      input.classList.add('error');
+      errorDiv.textContent = message;
+      errorDiv.style.display = 'block';
+    }
+
+    // Hide error
+    function hideError(input) {
+      const errorDiv = input.nextElementSibling;
+      input.classList.remove('error');
+      errorDiv.style.display = 'none';
+    }
+
+    // Validate form
+    function validateForm() {
+      let isValid = true;
+      const name = document.getElementById('name');
+      const email = document.getElementById('email');
+      const message = document.getElementById('message');
+
+      // Name validation
+      if (!name.value.trim()) {
+        showError(name, 'Please enter your full name');
+        isValid = false;
+      } else {
+        hideError(name);
+      }
+
+      // Email validation
+      if (!email.value.trim()) {
+        showError(email, 'Please enter your email address');
+        isValid = false;
+      } else if (!isValidEmail(email.value)) {
+        showError(email, 'Please enter a valid email address');
+        isValid = false;
+      } else {
+        hideError(email);
+      }
+
+      // Message validation
+      if (!message.value.trim()) {
+        showError(message, 'Please enter your message');
+        isValid = false;
+      } else {
+        hideError(message);
+      }
+
+      return isValid;
+    }
+
+    // Submit form
+    async function submitForm(formData) {
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          successMessage.style.display = 'block';
+          errorMessage.style.display = 'none';
+          contactForm.reset();
+        } else {
+          throw new Error('Failed to send message');
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'block';
+      }
+    }
+
+    // Form submission
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (validateForm()) {
+        const formData = {
+          name: document.getElementById('name').value,
+          email: document.getElementById('email').value,
+          service: document.getElementById('service').value,
+          message: document.getElementById('message').value,
+        };
+
+        await submitForm(formData);
+      }
+    });
+
+    // Real-time validation
+    document.querySelectorAll('.form-input, .form-textarea').forEach(input => {
+      input.addEventListener('blur', () => {
+        if (input.hasAttribute('required') && !input.value.trim()) {
+          showError(input, `Please enter ${input.name}`);
+        } else if (input.type === 'email' && input.value && !isValidEmail(input.value)) {
+          showError(input, 'Please enter a valid email address');
+        } else {
+          hideError(input);
+        }
+      });
+
+      input.addEventListener('input', () => {
+        if (input.classList.contains('error')) {
+          hideError(input);
+        }
+      });
+    });
+
+    // Calendar functionality
+    let currentDate = new Date();
+    let selectedDate = null;
+    let selectedTime = null;
+
+    // Mock booked slots (in real app, this would come from backend)
+    const bookedSlots = {
+      '2024-12-15': ['10:00', '14:00'],
+      '2024-12-16': ['11:00', '15:00'],
+      '2024-12-18': ['09:00', '13:00'],
+    };
+
+    function initializeCalendar() {
+      renderCalendar();
+      setupCalendarNavigation();
+    }
+
+    function renderCalendar() {
+      const calendarGrid = document.getElementById('calendar-grid');
+      const monthYear = document.getElementById('calendar-month-year');
+
+      // Update month/year display
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                         'July', 'August', 'September', 'October', 'November', 'December'];
+      monthYear.textContent = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+
+      // Clear previous calendar
+      calendarGrid.innerHTML = '';
+
+      // Add day headers
+      const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      dayHeaders.forEach(day => {
+        const headerDiv = document.createElement('div');
+        headerDiv.className = 'calendar-day-header';
+        headerDiv.textContent = day;
+        calendarGrid.appendChild(headerDiv);
+      });
+
+      // Get first day of month and last day
+      const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+      const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+      const startDate = new Date(firstDay);
+      startDate.setDate(startDate.getDate() - firstDay.getDay());
+
+      // Generate calendar days
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      for (let i = 0; i < 42; i++) {
+        const dayDiv = document.createElement('div');
+        dayDiv.className = 'calendar-day';
+        dayDiv.textContent = startDate.getDate();
+
+        const currentCellDate = new Date(startDate);
+
+        // Check if day is in current month
+        if (startDate.getMonth() !== currentDate.getMonth()) {
+          dayDiv.classList.add('disabled');
+        } else if (currentCellDate < today) {
+          dayDiv.classList.add('disabled');
+        } else {
+          dayDiv.classList.add('available');
+          dayDiv.addEventListener('click', () => selectDate(currentCellDate));
+        }
+
+        // Highlight selected date
+        if (selectedDate && currentCellDate.toDateString() === selectedDate.toDateString()) {
+          dayDiv.classList.add('selected');
+        }
+
+        calendarGrid.appendChild(dayDiv);
+        startDate.setDate(startDate.getDate() + 1);
+      }
+    }
+
+    function selectDate(date) {
+      selectedDate = date;
+      selectedTime = null;
+      renderCalendar();
+      renderTimeSlots();
+      document.getElementById('book-meeting').style.display = 'none';
+    }
+
+    function renderTimeSlots() {
+      const timeSlots = document.getElementById('time-slots');
+      timeSlots.innerHTML = '';
+
+      if (!selectedDate) return;
+
+      const timeOptions = ['09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00'];
+      const dateKey = selectedDate.toISOString().split('T')[0];
+
+      timeOptions.forEach(time => {
+        const slotDiv = document.createElement('div');
+        slotDiv.className = 'time-slot';
+        slotDiv.textContent = time;
+
+        // Check if slot is booked
+        if (bookedSlots[dateKey] && bookedSlots[dateKey].includes(time)) {
+          slotDiv.classList.add('booked');
+        } else {
+          slotDiv.addEventListener('click', () => selectTime(time));
+        }
+
+        // Highlight selected time
+        if (selectedTime === time) {
+          slotDiv.classList.add('selected');
+        }
+
+        timeSlots.appendChild(slotDiv);
+      });
+    }
+
+    function selectTime(time) {
+      selectedTime = time;
+      renderTimeSlots();
+      document.getElementById('book-meeting').style.display = 'block';
+    }
+
+    function setupCalendarNavigation() {
+      document.getElementById('prev-month').addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        selectedDate = null;
+        selectedTime = null;
+        renderCalendar();
+        renderTimeSlots();
+        document.getElementById('book-meeting').style.display = 'none';
+      });
+
+      document.getElementById('next-month').addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        selectedDate = null;
+        selectedTime = null;
+        renderCalendar();
+        renderTimeSlots();
+        document.getElementById('book-meeting').style.display = 'none';
+      });
+
+      document.getElementById('book-meeting').addEventListener('click', () => {
+        if (selectedDate && selectedTime) {
+          const meetingDateTime = new Date(selectedDate);
+          const [hours, minutes] = selectedTime.split(':');
+          meetingDateTime.setHours(parseInt(hours), parseInt(minutes));
+
+          alert(`Meeting booked for ${meetingDateTime.toLocaleString()}!\n\nWe'll send you a confirmation email shortly.`);
+
+          // In real app, this would send to backend
+          console.log('Booking meeting:', {
+            date: selectedDate.toISOString().split('T')[0],
+            time: selectedTime,
+            datetime: meetingDateTime
+          });
+        }
+      });
+    }
+
+    // Insert header and footer immediately
+    document.body.insertAdjacentHTML('afterbegin', window.headerHTML);
+    document.body.insertAdjacentHTML('beforeend', window.footerHTML);
+
+    // Add header styles
+    const headerStyle = document.createElement('style');
+    headerStyle.textContent = window.headerStyles;
+    document.head.appendChild(headerStyle);
+
+    // Add footer styles
+    const footerStyle = document.createElement('style');
+    footerStyle.textContent = window.footerStyles;
+    document.head.appendChild(footerStyle);
+
+    // Initialize page-specific functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const footerStyle = document.createElement('style');
+      footerStyle.textContent = window.footerStyles;
+      document.head.appendChild(footerStyle);
+
+      // Initialize calendar
+      initializeCalendar();
+    });
+  </script>
+</body>
+</html>

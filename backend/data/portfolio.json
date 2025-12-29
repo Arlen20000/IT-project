@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "title": "E-Commerce Platform",
+    "description": "A full-stack e-commerce solution with payment integration, inventory management, and admin dashboard.",
+    "technologies": ["React", "Node.js", "MongoDB", "Stripe"],
+    "image": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop&crop=center",
+    "link": "#"
+  },
+  {
+    "id": 2,
+    "title": "Healthcare Mobile App",
+    "description": "Patient management app with telemedicine features, appointment scheduling, and secure messaging.",
+    "technologies": ["React Native", "Firebase", "WebRTC"],
+    "image": "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=400&fit=crop&crop=center",
+    "link": "#"
+  },
+  {
+    "id": 3,
+    "title": "Cloud Migration Project",
+    "description": "Migrated legacy systems to AWS cloud with zero downtime, improving performance by 40%.",
+    "technologies": ["AWS", "Docker", "Kubernetes", "Terraform"],
+    "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop&crop=center",
+    "link": "#"
+  },
+  {
+    "id": 4,
+    "title": "AI Chatbot Implementation",
+    "description": "Custom chatbot for customer service automation, reducing response time by 60%.",
+    "technologies": ["Python", "TensorFlow", "Dialogflow", "Node.js"],
+    "image": "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=600&h=400&fit=crop&crop=center",
+    "link": "#"
+  },
+  {
+    "id": 5,
+    "title": "Financial Dashboard",
+    "description": "Real-time financial analytics dashboard with predictive modeling and reporting features.",
+    "technologies": ["Vue.js", "D3.js", "Python", "PostgreSQL"],
+    "image": "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600&h=400&fit=crop&crop=center",
+    "link": "#"
+  },
+  {
+    "id": 6,
+    "title": "IoT Security System",
+    "description": "Smart home security system with IoT sensors, mobile app control, and cloud monitoring.",
+    "technologies": ["Arduino", "React Native", "AWS IoT", "MQTT"],
+    "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop&crop=center",
+    "link": "#"
+  }
+]

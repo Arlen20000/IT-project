@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing - TechFlow Solutions</title>
+  <meta name="description" content="Choose the perfect IT outsourcing package for your business. Flexible pricing with monthly and yearly options.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Pricing specific styles */
+    .pricing-hero {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .pricing-toggle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin: 3rem 0;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 60px;
+      height: 30px;
+      background: var(--bg-secondary);
+      border-radius: 15px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .toggle-switch.active {
+      background: var(--primary-color);
+    }
+
+    .toggle-slider {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 24px;
+      height: 24px;
+      background: white;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    .toggle-switch.active .toggle-slider {
+      transform: translateX(30px);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .pricing-card {
+      background: var(--bg-primary);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border: 2px solid var(--border-color);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .pricing-card.popular {
+      border-color: var(--primary-color);
+      transform: scale(1.05);
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary-color);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+    }
+
+    .pricing-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .pricing-price {
+      font-size: var(--font-size-4xl);
+      font-weight: 700;
+      color: var(--primary-color);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-period {
+      font-size: var(--font-size-sm);
+      color: var(--text-secondary);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .pricing-features {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 2rem;
+    }
+
+    .pricing-features li {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+    }
+
+    .pricing-features li:before {
+      content: "✓";
+      color: var(--accent-color);
+      font-weight: bold;
+      margin-right: 0.75rem;
+      font-size: var(--font-size-lg);
+    }
+
+    .faq-section {
+      background-color: var(--bg-secondary);
+      padding: 4rem 0;
+    }
+
+    .faq-item {
+      background: var(--bg-primary);
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .faq-question {
+      padding: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    .faq-question::after {
+      content: "+";
+      font-size: var(--font-size-xl);
+      transition: var(--transition);
+    }
+
+    .faq-item.active .faq-question::after {
+      content: "−";
+    }
+
+    .faq-answer {
+      padding: 0 1.5rem 1.5rem;
+      display: none;
+      color: var(--text-secondary);
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-card.popular {
+        transform: none;
+      }
+
+      .pricing-toggle {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+
+    /* ROI Calculator */
+    .roi-section {
+      padding: 4rem 0;
+      background-color: var(--bg-secondary);
+    }
+
+    .roi-calculator {
+      background: var(--bg-primary);
+      border-radius: 1rem;
+      padding: 3rem;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+    }
+
+    .roi-inputs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-group label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-wrapper input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      font-size: var(--font-size-base);
+      transition: var(--transition);
+    }
+
+    .input-wrapper input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .currency, .percentage {
+      position: absolute;
+      right: 1rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    .roi-results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .result-card {
+      background: var(--bg-secondary);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      text-align: center;
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    .result-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .result-card.highlight {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    .result-card h3 {
+      font-size: var(--font-size-base);
+      margin-bottom: 0.5rem;
+      color: inherit;
+    }
+
+    .result-value {
+      font-size: var(--font-size-2xl);
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 0.25rem;
+    }
+
+    .result-card.highlight .result-value {
+      color: white;
+    }
+
+    .result-value.positive {
+      color: #10b981;
+    }
+
+    .result-card p {
+      font-size: var(--font-size-sm);
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .result-card.highlight p {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .roi-chart {
+      height: 300px;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header will be inserted here by JavaScript -->
+
+  <main>
+    <!-- Pricing Hero -->
+    <section class="pricing-hero">
+      <div class="container">
+        <h1 class="animate-on-scroll">Choose Your Plan</h1>
+        <p class="animate-on-scroll">Flexible pricing options designed to scale with your business needs.</p>
+      </div>
+    </section>
+
+    <!-- Pricing Toggle -->
+    <section class="section">
+      <div class="container">
+        <div class="pricing-toggle">
+          <span>Monthly</span>
+          <div id="pricing-toggle" class="toggle-switch">
+            <div class="toggle-slider"></div>
+          </div>
+          <span>Yearly <span style="color: var(--accent-color); font-weight: 600;">(Save 17%)</span></span>
+        </div>
+
+        <div id="pricing-container" class="pricing-grid">
+          <!-- Pricing packages will be loaded here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ROI Calculator Section -->
+    <section class="roi-section">
+      <div class="container">
+        <h2 class="animate-on-scroll">Calculate Your ROI</h2>
+        <p class="animate-on-scroll">See how much you can save with our development services</p>
+
+        <div class="roi-calculator">
+          <div class="roi-inputs">
+            <div class="input-group">
+              <label for="current-cost">Current Monthly Development Cost</label>
+              <div class="input-wrapper">
+                <span class="currency">$</span>
+                <input type="number" id="current-cost" value="5000" min="0">
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="project-hours">Monthly Development Hours</label>
+              <input type="number" id="project-hours" value="160" min="0">
+            </div>
+
+            <div class="input-group">
+              <label for="efficiency-gain">Expected Efficiency Gain (%)</label>
+              <div class="input-wrapper">
+                <input type="number" id="efficiency-gain" value="40" min="0" max="100">
+                <span class="percentage">%</span>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="timeline">Project Timeline (months)</label>
+              <input type="number" id="timeline" value="6" min="1" max="24">
+            </div>
+          </div>
+
+          <div class="roi-results">
+            <div class="result-card">
+              <h3>Total Investment</h3>
+              <div class="result-value" id="total-investment">$0</div>
+              <p>Over <span id="investment-period">6</span> months</p>
+            </div>
+
+            <div class="result-card">
+              <h3>Monthly Savings</h3>
+              <div class="result-value positive" id="monthly-savings">$0</div>
+              <p>After implementation</p>
+            </div>
+
+            <div class="result-card">
+              <h3>ROI Timeline</h3>
+              <div class="result-value" id="roi-timeline">0 months</div>
+              <p>To break even</p>
+            </div>
+
+            <div class="result-card highlight">
+              <h3>3-Year Savings</h3>
+              <div class="result-value positive" id="three-year-savings">$0</div>
+              <p>Total cost reduction</p>
+            </div>
+          </div>
+
+          <div class="roi-chart">
+            <canvas id="roiChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer will be inserted here by JavaScript -->
+
+  <script src="components/header.js"></script>
+  <script src="components/footer.js"></script>
+  <script src="scripts/common.js"></script>
+  <script>
+    let packages = [];
+    let isYearly = false;
+
+    // Load pricing from API
+    async function loadPricing() {
+      const container = document.getElementById('pricing-container');
+      utils.showLoading(container);
+
+      try {
+        const response = await fetch('/api/pricing');
+        packages = await response.json();
+
+        renderPricing();
+
+      } catch (error) {
+        console.error('Error loading pricing:', error);
+        container.innerHTML = '<p class="error">Failed to load pricing. Please try again later.</p>';
+      }
+    }
+
+    // Render pricing packages
+    function renderPricing() {
+      const container = document.getElementById('pricing-container');
+      container.innerHTML = packages.map((pkg, index) => `
+        <div class="pricing-card ${index === 1 ? 'popular' : ''} animate-on-scroll">
+          ${index === 1 ? '<div class="popular-badge">Most Popular</div>' : ''}
+          <div class="pricing-header">
+            <h3>${pkg.name}</h3>
+            <div class="pricing-price">${utils.formatCurrency(isYearly ? pkg.yearlyPrice : pkg.monthlyPrice)}</div>
+            <div class="pricing-period">per ${isYearly ? 'year' : 'month'}</div>
+          </div>
+          <ul class="pricing-features">
+            ${pkg.features.map(feature => `<li>${feature}</li>`).join('')}
+          </ul>
+          <a href="contact.html?plan=${pkg.id}" class="btn btn-primary" style="width: 100%; text-align: center;">Get Started</a>
+        </div>
+      `).join('');
+    }
+
+    // Toggle pricing period
+    function togglePricing() {
+      const toggle = document.getElementById('pricing-toggle');
+      isYearly = !isYearly;
+      toggle.classList.toggle('active', isYearly);
+      renderPricing();
+    }
+
+    // FAQ accordion
+    function initFAQ() {
+      document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+          const item = question.parentElement;
+          item.classList.toggle('active');
+        });
+      });
+    }
+
+    // Insert header and footer
+    // Insert header and footer immediately
+    document.body.insertAdjacentHTML('afterbegin', window.headerHTML);
+    document.body.insertAdjacentHTML('beforeend', window.footerHTML);
+
+    // Add header styles
+    const headerStyle = document.createElement('style');
+    headerStyle.textContent = window.headerStyles;
+    document.head.appendChild(headerStyle);
+
+    // Add footer styles
+    const footerStyle = document.createElement('style');
+    footerStyle.textContent = window.footerStyles;
+    document.head.appendChild(footerStyle);
+
+    // Initialize page-specific functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      footerStyle.textContent = window.footerStyles;
+      document.head.appendChild(footerStyle);
+
+      // Load pricing
+      loadPricing();
+
+      // Pricing toggle
+      document.getElementById('pricing-toggle').addEventListener('click', togglePricing);
+
+      // Initialize ROI calculator
+      initializeROICalculator();
+    });
+  </script>
+  <script>
+    let roiChart;
+
+    // ROI Calculator functionality
+    function initializeROICalculator() {
+      const inputs = ['current-cost', 'project-hours', 'efficiency-gain', 'timeline'];
+      const results = {
+        'total-investment': 0,
+        'monthly-savings': 0,
+        'roi-timeline': 0,
+        'three-year-savings': 0,
+        'investment-period': 0
+      };
+
+      function calculateROI() {
+        const currentCost = parseFloat(document.getElementById('current-cost').value) || 0;
+        const projectHours = parseFloat(document.getElementById('project-hours').value) || 0;
+        const efficiencyGain = parseFloat(document.getElementById('efficiency-gain').value) / 100 || 0;
+        const timeline = parseFloat(document.getElementById('timeline').value) || 1;
+
+        // Calculate costs based on selected package (using Professional as default)
+        const hourlyRate = 75; // Average developer hourly rate
+        const ourMonthlyCost = (projectHours * hourlyRate * 0.7); // 30% cost reduction
+
+        // Calculate savings
+        const monthlySavings = currentCost - ourMonthlyCost;
+        const totalInvestment = ourMonthlyCost * timeline;
+        const roiMonths = totalInvestment / monthlySavings;
+        const threeYearSavings = monthlySavings * 36 - totalInvestment;
+
+        // Update results
+        results['total-investment'] = totalInvestment;
+        results['monthly-savings'] = monthlySavings;
+        results['roi-timeline'] = Math.ceil(roiMonths);
+        results['three-year-savings'] = threeYearSavings;
+        results['investment-period'] = timeline;
+
+        updateDisplay();
+        updateChart();
+      }
+
+      function updateDisplay() {
+        Object.keys(results).forEach(key => {
+          const element = document.getElementById(key);
+          if (element) {
+            let value = results[key];
+            let formattedValue;
+
+            if (key.includes('savings') || key.includes('investment')) {
+              formattedValue = utils.formatCurrency(Math.abs(value));
+              if (value < 0) {
+                element.classList.remove('positive');
+                element.classList.add('negative');
+              } else {
+                element.classList.remove('negative');
+                element.classList.add('positive');
+              }
+            } else if (key === 'roi-timeline') {
+              formattedValue = `${value} months`;
+            } else if (key === 'investment-period') {
+              formattedValue = value;
+            } else {
+              formattedValue = utils.formatCurrency(value);
+            }
+
+            element.textContent = formattedValue;
+          }
+        });
+      }
+
+      function updateChart() {
+        const timeline = results['investment-period'];
+        const monthlySavings = results['monthly-savings'];
+        const totalInvestment = results['total-investment'];
+
+        const labels = [];
+        const cumulativeSavings = [];
+        const cumulativeCosts = [];
+
+        let savings = 0;
+        let costs = totalInvestment;
+
+        for (let month = 0; month <= 36; month++) {
+          labels.push(`Month ${month}`);
+          savings += monthlySavings;
+          cumulativeSavings.push(savings);
+          cumulativeCosts.push(costs);
+        }
+
+        if (roiChart) {
+          roiChart.destroy();
+        }
+
+        const ctx = document.getElementById('roiChart').getContext('2d');
+        roiChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Cumulative Savings',
+              data: cumulativeSavings,
+              borderColor: '#10b981',
+              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+              fill: true,
+              tension: 0.4
+            }, {
+              label: 'Total Investment',
+              data: cumulativeCosts,
+              borderColor: '#ef4444',
+              backgroundColor: 'rgba(239, 68, 68, 0.1)',
+              fill: true,
+              tension: 0.4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              title: {
+                display: true,
+                text: 'ROI Projection Over 3 Years'
+              },
+              legend: {
+                position: 'top'
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: function(value) {
+                    return '$' + value.toLocaleString();
+                  }
+                }
+              }
+            },
+            interaction: {
+              intersect: false,
+              mode: 'index'
+            }
+          }
+        });
+      }
+
+      // Add event listeners
+      inputs.forEach(inputId => {
+        document.getElementById(inputId).addEventListener('input', calculateROI);
+      });
+
+      // Initial calculation
+      calculateROI();
+    }
+  </script>
+</body>
+</html>

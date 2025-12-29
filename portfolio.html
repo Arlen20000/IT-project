@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - TechFlow Solutions</title>
+  <meta name="description" content="Explore our portfolio of successful projects including web applications, mobile apps, and cloud solutions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <style>
+    /* Portfolio specific styles */
+    .portfolio-hero {
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border-color);
+      background: var(--bg-primary);
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--bg-primary);
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      border: 1px solid var(--border-color);
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .project-image {
+      height: 250px;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--bg-tertiary);
+    }
+
+    .project-content {
+      padding: 1.5rem;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .tech-tag {
+      background: var(--bg-secondary);
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: var(--font-size-sm);
+      color: var(--text-secondary);
+    }
+
+    .project-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .project-link:hover {
+      color: var(--primary-hover);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-primary);
+      border-radius: 1rem;
+      max-width: 800px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .modal-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 1rem 1rem 0 0;
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-buttons {
+        justify-content: center;
+      }
+
+      .modal-content {
+        width: 95%;
+        margin: 1rem;
+      }
+    }
+
+    /* Featured Project Section */
+    .featured-project-section {
+      margin-top: 4rem;
+      padding: 4rem 0;
+      background-color: var(--bg-secondary);
+    }
+
+    .featured-project {
+      background: var(--bg-primary);
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+    }
+
+    .featured-header {
+      position: relative;
+      height: 400px;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: end;
+    }
+
+    .featured-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(transparent 60%, rgba(0,0,0,0.8));
+    }
+
+    .featured-title {
+      position: relative;
+      z-index: 2;
+      color: white;
+      padding: 2rem;
+      margin: 0;
+      font-size: var(--font-size-3xl);
+    }
+
+    .featured-content {
+      padding: 2rem;
+    }
+
+    .featured-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .meta-item {
+      text-align: center;
+      padding: 1rem;
+      background: var(--bg-secondary);
+      border-radius: 0.75rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .meta-value {
+      display: block;
+      font-size: var(--font-size-2xl);
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 0.25rem;
+    }
+
+    .meta-label {
+      font-size: var(--font-size-sm);
+      color: var(--text-secondary);
+    }
+
+    .featured-description {
+      font-size: var(--font-size-lg);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .featured-tech {
+      margin-bottom: 2rem;
+    }
+
+    .tech-title {
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .tech-item {
+      background: var(--bg-tertiary);
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      font-size: var(--font-size-sm);
+      color: var(--text-secondary);
+    }
+
+    .featured-challenge {
+      background: var(--bg-secondary);
+      padding: 2rem;
+      border-radius: 1rem;
+      margin-bottom: 2rem;
+      border-left: 4px solid var(--accent-color);
+    }
+
+    .challenge-title {
+      font-weight: 600;
+      color: var(--accent-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .featured-results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .result-item {
+      text-align: center;
+    }
+
+    .result-value {
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      color: var(--primary-color);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .result-label {
+      font-size: var(--font-size-sm);
+      color: var(--text-secondary);
+    }
+
+    .featured-testimonial {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      text-align: center;
+    }
+
+    .testimonial-quote {
+      font-size: var(--font-size-lg);
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-author {
+      font-weight: 600;
+    }
+
+    .testimonial-role {
+      font-size: var(--font-size-sm);
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header will be inserted here by JavaScript -->
+
+  <main>
+    <!-- Portfolio Hero -->
+    <section class="portfolio-hero">
+      <div class="container">
+        <h1 class="animate-on-scroll">Our Portfolio</h1>
+        <p class="animate-on-scroll">Showcasing our successful projects and innovative solutions.</p>
+      </div>
+    </section>
+
+    <!-- Portfolio Content -->
+    <section class="section">
+      <div class="container">
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">All Projects</button>
+          <button class="filter-btn" data-filter="web">Web Development</button>
+          <button class="filter-btn" data-filter="mobile">Mobile Apps</button>
+          <button class="filter-btn" data-filter="cloud">Cloud Solutions</button>
+          <button class="filter-btn" data-filter="ai">AI & ML</button>
+        </div>
+
+        <div id="portfolio-container" class="portfolio-grid">
+          <!-- Projects will be loaded here -->
+        </div>
+
+        <!-- Featured Project Deep Dive -->
+        <div class="featured-project-section">
+          <h2 class="animate-on-scroll">Featured Case Study</h2>
+          <div class="featured-project animate-on-scroll" id="featured-project">
+            <!-- Featured project will be loaded here -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Project Modal -->
+  <div id="project-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close">&times;</button>
+      <img id="modal-image" class="modal-image" src="" alt="">
+      <div class="modal-body">
+        <h2 id="modal-title"></h2>
+        <p id="modal-description"></p>
+        <div id="modal-tech" class="project-tech"></div>
+        <a id="modal-link" href="#" class="project-link" target="_blank">View Project →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer will be inserted here by JavaScript -->
+
+  <script src="components/header.js"></script>
+  <script src="components/footer.js"></script>
+  <script src="scripts/common.js"></script>
+  <script>
+    let allProjects = [];
+
+    // Load portfolio from API
+    async function loadPortfolio() {
+      const container = document.getElementById('portfolio-container');
+      utils.showLoading(container);
+
+      try {
+        const response = await fetch('/api/portfolio');
+        allProjects = await response.json();
+
+        renderProjects(allProjects);
+        renderFeaturedProject(allProjects[0]); // Show first project as featured
+
+      } catch (error) {
+        console.error('Error loading portfolio:', error);
+        container.innerHTML = '<p class="error">Failed to load portfolio. Please try again later.</p>';
+      }
+    }
+
+    // Render featured project
+    function renderFeaturedProject(project) {
+      const container = document.getElementById('featured-project');
+      container.innerHTML = `
+        <div class="featured-header" style="background-image: url('${project.image}')">
+          <div class="featured-overlay"></div>
+          <h2 class="featured-title">${project.title}</h2>
+        </div>
+        <div class="featured-content">
+          <div class="featured-meta">
+            <div class="meta-item">
+              <span class="meta-value">3 months</span>
+              <span class="meta-label">Development Time</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-value">50+</span>
+              <span class="meta-label">Team Members</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-value">99.9%</span>
+              <span class="meta-label">Uptime</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-value">$2.5M</span>
+              <span class="meta-label">Revenue Generated</span>
+            </div>
+          </div>
+
+          <p class="featured-description">${project.description}</p>
+
+          <div class="featured-tech">
+            <h3 class="tech-title">Technologies Used</h3>
+            <div class="tech-list">
+              ${project.technologies.map(tech => `<span class="tech-item">${tech}</span>`).join('')}
+            </div>
+          </div>
+
+          <div class="featured-challenge">
+            <h3 class="challenge-title">The Challenge</h3>
+            <p>Our client needed a scalable e-commerce platform that could handle millions of transactions while maintaining sub-second response times. The legacy system was struggling with peak loads and lacked modern security features.</p>
+          </div>
+
+          <h3>Results & Impact</h3>
+          <div class="featured-results">
+            <div class="result-item">
+              <span class="result-value">300%</span>
+              <span class="result-label">Performance Increase</span>
+            </div>
+            <div class="result-item">
+              <span class="result-value">95%</span>
+              <span class="result-label">Customer Satisfaction</span>
+            </div>
+            <div class="result-item">
+              <span class="result-value">$500K</span>
+              <span class="result-label">Cost Savings</span>
+            </div>
+            <div class="result-item">
+              <span class="result-value">24/7</span>
+              <span class="result-label">System Availability</span>
+            </div>
+          </div>
+
+          <div class="featured-testimonial">
+            <p class="testimonial-quote">"TechFlow Solutions transformed our business with their innovative e-commerce platform. The results exceeded our expectations."</p>
+            <div class="testimonial-author">Sarah Mitchell</div>
+            <div class="testimonial-role">CTO, Global Retail Corp</div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Render projects
+    function renderProjects(projects) {
+      const container = document.getElementById('portfolio-container');
+      container.innerHTML = '';
+
+      if (projects.length === 0) {
+        container.innerHTML = '<p class="no-projects">No projects found in this category.</p>';
+        return;
+      }
+
+      projects.forEach(project => {
+        const projectCard = document.createElement('div');
+        projectCard.className = 'portfolio-item';
+        projectCard.setAttribute('data-category', getProjectCategory(project));
+        projectCard.innerHTML = `
+          <div class="portfolio-image">
+            <img src="${project.image}" alt="${project.title}" loading="lazy">
+            <div class="portfolio-overlay">
+              <button class="view-project-btn" onclick="openProjectModal(${project.id})">
+                View Details
+              </button>
+            </div>
+          </div>
+          <div class="portfolio-content">
+            <h3 class="portfolio-title">${project.title}</h3>
+            <p class="portfolio-description">${project.description}</p>
+            <div class="portfolio-tech">
+              ${project.technologies.slice(0, 3).map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+              ${project.technologies.length > 3 ? `<span class="tech-tag">+${project.technologies.length - 3}</span>` : ''}
+            </div>
+          </div>
+        `;
+        container.appendChild(projectCard);
+      });
+    }
+
+    // Get project category based on technologies
+    function getProjectCategory(project) {
+      if (project.technologies.some(tech => tech.toLowerCase().includes('react') || tech.toLowerCase().includes('vue'))) {
+        return 'web';
+      }
+      if (project.technologies.some(tech => tech.toLowerCase().includes('react native'))) {
+        return 'mobile';
+      }
+      if (project.technologies.some(tech => tech.toLowerCase().includes('aws') || tech.toLowerCase().includes('docker'))) {
+        return 'cloud';
+      }
+      if (project.technologies.some(tech => tech.toLowerCase().includes('tensorflow') || tech.toLowerCase().includes('python'))) {
+        return 'ai';
+      }
+      return 'web'; // default
+    }
+
+    // Filter projects
+    function filterProjects(category) {
+      if (category === 'all') {
+        renderProjects(allProjects);
+      } else {
+        const filtered = allProjects.filter(project => getProjectCategory(project) === category);
+        renderProjects(filtered);
+      }
+    }
+
+    // Open project modal
+    function openProjectModal(projectId) {
+      const project = allProjects.find(p => p.id === projectId);
+      if (!project) return;
+
+      const modal = document.getElementById('project-modal');
+      const modalImage = document.getElementById('modal-image');
+      const modalTitle = document.getElementById('modal-title');
+      const modalDescription = document.getElementById('modal-description');
+      const modalTech = document.getElementById('modal-tech');
+      const modalLink = document.getElementById('modal-link');
+
+      modalImage.src = project.image;
+      modalTitle.textContent = project.title;
+      modalDescription.textContent = project.description;
+      modalTech.innerHTML = project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('');
+      modalLink.href = project.link;
+
+      modal.classList.add('active');
+    }
+
+    // Close modal
+    function closeModal() {
+      document.getElementById('project-modal').classList.remove('active');
+    }
+
+    // Insert header and footer immediately
+    document.body.insertAdjacentHTML('afterbegin', window.headerHTML);
+    document.body.insertAdjacentHTML('beforeend', window.footerHTML);
+
+    // Add header styles
+    const headerStyle = document.createElement('style');
+    headerStyle.textContent = window.headerStyles;
+    document.head.appendChild(headerStyle);
+
+    // Add footer styles
+    const footerStyle = document.createElement('style');
+    footerStyle.textContent = window.footerStyles;
+    document.head.appendChild(footerStyle);
+
+    // Initialize page-specific functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load portfolio
+      loadPortfolio();
+
+      // Filter buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          filterProjects(btn.dataset.filter);
+        });
+      });
+
+      // Modal close
+      document.querySelector('.modal-close').addEventListener('click', closeModal);
+      document.getElementById('project-modal').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeModal();
+      });
+    });
+  </script>
+</body>
+</html>
