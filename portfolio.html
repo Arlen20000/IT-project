@@ -492,21 +492,22 @@
 
       projects.forEach(project => {
         const projectCard = document.createElement('div');
-        projectCard.className = 'portfolio-item';
+        // Use classes that match the CSS defined above
+        projectCard.className = 'project-card';
         projectCard.setAttribute('data-category', getProjectCategory(project));
         projectCard.innerHTML = `
-          <div class="portfolio-image">
+          <div class="project-image">
             <img src="${project.image}" alt="${project.title}" loading="lazy">
             <div class="portfolio-overlay">
-              <button class="view-project-btn" onclick="openProjectModal(${project.id})">
+              <button class="view-project-btn" onclick="openProjectModal('${project.id}')">
                 View Details
               </button>
             </div>
           </div>
-          <div class="portfolio-content">
-            <h3 class="portfolio-title">${project.title}</h3>
-            <p class="portfolio-description">${project.description}</p>
-            <div class="portfolio-tech">
+          <div class="project-content">
+            <h3 class="project-title">${project.title}</h3>
+            <p class="project-description">${project.description}</p>
+            <div class="project-tech">
               ${project.technologies.slice(0, 3).map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
               ${project.technologies.length > 3 ? `<span class="tech-tag">+${project.technologies.length - 3}</span>` : ''}
             </div>
@@ -545,7 +546,7 @@
 
     // Open project modal
     function openProjectModal(projectId) {
-      const project = allProjects.find(p => p.id === projectId);
+      const project = allProjects.find(p => String(p.id) === String(projectId));
       if (!project) return;
 
       const modal = document.getElementById('project-modal');
